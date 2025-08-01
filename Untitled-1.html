@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Traffic Jam Data Analysis</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f5f5f5;
+    }
+    
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    h1 {
+        color: #333;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    
+    .subtitle {
+        text-align: center;
+        color: #666;
+        margin-bottom: 30px;
+    }
+    
+    .traffic-btn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        margin: 20px 0;
+        transition: background-color 0.3s;
+    }
+    
+    .traffic-btn:hover {
+        background-color: #45a049;
+    }
+    
+    .solutions-btn {
+        background-color: #dc3545;
+        color: white;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        margin: 20px 0;
+        transition: background-color 0.3s;
+    }
+    
+    .solutions-btn:hover {
+        background-color: #c82333;
+    }
+    
+    .python-btn {
+        background-color: #007acc;
+        color: white;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        margin: 20px 0;
+        transition: background-color 0.3s;
+    }
+    
+    .python-btn:hover {
+        background-color: #005a9e;
+    }
+    
+    .code-block {
+        background-color: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 15px 0;
+        font-family: 'Courier New', monospace;
+        font-size: 14px;
+        line-height: 1.4;
+        overflow-x: auto;
+    }
+    
+    .step-number {
+        background-color: #007acc;
+        color: white;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        margin-right: 10px;
+    }
+    
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.7);
+        overflow-y: auto;
+    }
+    
+    .modal-content {
+        background-color: white;
+        margin: 5% auto;
+        padding: 30px;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 1000px;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    
+    .close:hover {
+        color: #000;
+    }
+    
+    .chart-container {
+        text-align: center;
+        margin: 20px 0;
+    }
+    
+    .chart-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .explanation {
+        margin: 30px 0;
+        line-height: 1.6;
+    }
+    
+    .explanation h3 {
+        color: #333;
+        margin-bottom: 15px;
+    }
+    
+    .explanation p {
+        margin-bottom: 15px;
+        color: #555;
+    }
+    
+    .key-points {
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+    }
+    
+    .key-points h4 {
+        color: #333;
+        margin-bottom: 10px;
+    }
+    
+    .key-points ul {
+        margin: 0;
+        padding-left: 20px;
+    }
+    
+    .key-points li {
+        margin-bottom: 8px;
+        color: #555;
+    }
+    
+    .city-highlights {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        margin: 20px 0;
+    }
+    
+    .city-card {
+        background-color: #f0f8ff;
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 4px solid #4CAF50;
+    }
+    
+    .city-card h5 {
+        margin: 0 0 10px 0;
+        color: #333;
+    }
+    
+    .city-card p {
+        margin: 0;
+        color: #666;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Traffic Jam Data Analysis</h1>
+    <p class="subtitle">Comprehensive analysis of global traffic congestion patterns</p>
+    
+    <h2>Global Traffic Delay Analysis</h2>
+    <button class="traffic-btn" onclick="showTrafficData()">View Traffic Data & Analysis</button>
+    
+    <h2>Time Cost Analysis (2023-2024)</h2>
+    <button class="traffic-btn" onclick="showTimeCostData()">View Time Cost Data & Analysis</button>
+    
+    <h2>Shared Mobility Trends</h2>
+    <button class="traffic-btn" onclick="showMobilityData()">View Shared Mobility Data & Analysis</button>
+    
+    <h2>Proposed Solutions</h2>
+    <button class="solutions-btn" onclick="showSolutions()">View Proposed Solutions</button>
+    
+    <h2>Python Traffic Analysis</h2>
+    <button class="python-btn" onclick="showPythonAnalysis()">View Python Code & Analysis</button>
+    
+    <div id="trafficModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeTrafficModal()">&times;</span>
+            
+            <h2>Global Traffic Delay Analysis</h2>
+            
+            <div class="chart-container">
+                <img src="traffic-delay-chart.png" alt="Global Traffic Delay Chart" class="chart-image">
+            </div>
+            
+            <div class="explanation">
+                <h3>Understanding Traffic Delays</h3>
+                <p>Traffic delays represent the average time lost by commuters due to congestion in major cities worldwide. This data reveals critical insights about urban mobility challenges and their economic impact.</p>
+                
+                <div class="key-points">
+                    <h4>Key Findings:</h4>
+                    <ul>
+                        <li><strong>Istanbul leads globally</strong> with 105 hours of annual delay, indicating severe infrastructure challenges</li>
+                        <li><strong>US cities show high congestion</strong> - New York City and Chicago both experience 102 hours of delay annually</li>
+                        <li><strong>European cities</strong> like London (101h) and Paris (97h) face significant urban mobility issues</li>
+                        <li><strong>Global average</strong> shows most major cities experience 80-100+ hours of annual traffic delays</li>
+                    </ul>
+                </div>
+                
+                <h3>What Causes Traffic Delays?</h3>
+                <p>Traffic congestion occurs when demand for roadway travel exceeds the supply of roadways. As vehicular traffic builds, drivers, freight movers, and bus riders lose time and spend fuel unproductively. Several factors contribute:</p>
+                
+                <ul>
+                    <li><strong>Infrastructure limitations:</strong> Insufficient road capacity for growing populations</li>
+                    <li><strong>Urban planning challenges:</strong> Poor city design and lack of alternative transportation</li>
+                    <li><strong>Economic growth:</strong> Increased vehicle ownership and commercial activity</li>
+                    <li><strong>Public transportation gaps:</strong> Inadequate mass transit systems</li>
+                    <li><strong>Traffic management:</strong> Inefficient signal timing and incident response</li>
+                </ul>
+                
+                <div class="city-highlights">
+                    <div class="city-card">
+                        <h5>🏆 Highest Delay: Istanbul (105h)</h5>
+                        <p>Turkey's largest city faces severe infrastructure challenges with rapid urbanization and limited public transit options.</p>
+                    </div>
+                    <div class="city-card">
+                        <h5>🇺🇸 US Leaders: NYC & Chicago (102h each)</h5>
+                        <p>Major American cities struggle with aging infrastructure and high vehicle dependency despite extensive public transit.</p>
+                    </div>
+                    <div class="city-card">
+                        <h5>🇬🇧 London (101h)</h5>
+                        <p>Despite congestion pricing and extensive public transport, London still faces significant delays due to high demand.</p>
+                    </div>
+                    <div class="city-card">
+                        <h5>🇫🇷 Paris (97h)</h5>
+                        <p>Historic city center and tourism create unique congestion challenges despite excellent metro system.</p>
+                    </div>
+                </div>
+                
+                <h3>Economic Impact</h3>
+                <p>Traffic delays have profound economic consequences:</p>
+                <ul>
+                    <li><strong>Productivity loss:</strong> Billions of dollars lost annually in wasted time</li>
+                    <li><strong>Fuel consumption:</strong> Increased emissions and fuel costs from idling vehicles</li>
+                    <li><strong>Business efficiency:</strong> Delayed deliveries and reduced worker productivity</li>
+                    <li><strong>Quality of life:</strong> Stress, health impacts, and reduced leisure time</li>
+                </ul>
+                
+                <h3>Solutions and Recommendations</h3>
+                <p>Addressing traffic delays requires comprehensive approaches:</p>
+                <ul>
+                    <li><strong>Public transportation investment:</strong> Expand and improve mass transit systems</li>
+                    <li><strong>Smart city technology:</strong> Implement intelligent traffic management systems</li>
+                    <li><strong>Urban planning:</strong> Design cities for people, not just cars</li>
+                    <li><strong>Alternative transportation:</strong> Promote walking, cycling, and carpooling</li>
+                    <li><strong>Remote work policies:</strong> Reduce peak-hour travel demand</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Time Cost Modal -->
+    <div id="timeCostModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeTimeCostModal()">&times;</span>
+            
+            <h2>Time Cost Analysis (2023-2024)</h2>
+            
+            <div class="chart-container">
+                <img src="time-cost-chart.png" alt="Time Cost Chart" class="chart-image">
+            </div>
+            
+            <div class="explanation">
+                <h3>Understanding Time Costs</h3>
+                <p>Time costs represent the economic value of time lost due to traffic congestion, measured in USD. This data shows the financial impact of traffic delays across major economies.</p>
+                
+                <div class="key-points">
+                    <h4>Key Findings:</h4>
+                    <ul>
+                        <li><strong>United States leads globally</strong> with the highest time costs: $733 in 2023, projected to reach $771 in 2024</li>
+                        <li><strong>United Kingdom follows closely</strong> with $706 in 2023, expected to rise to $726 in 2024</li>
+                        <li><strong>Germany shows significantly lower costs</strong> at $457 in 2023, projected to reach $498 in 2024</li>
+                        <li><strong>All countries show increasing trends</strong> with Germany experiencing the largest percentage increase</li>
+                    </ul>
+                </div>
+                
+                <h3>Economic Impact Analysis</h3>
+                <p>The time cost data reveals critical insights about the economic burden of traffic congestion:</p>
+                
+                <ul>
+                    <li><strong>Productivity losses:</strong> Billions of dollars lost annually in wasted commuting time</li>
+                    <li><strong>Economic competitiveness:</strong> Higher costs may impact business efficiency and investment decisions</li>
+                    <li><strong>Quality of life:</strong> Increased stress and reduced leisure time for commuters</li>
+                    <li><strong>Environmental costs:</strong> Additional fuel consumption and emissions from extended travel times</li>
+                </ul>
+                
+                <div class="city-highlights">
+                    <div class="city-card">
+                        <h5>🇺🇸 United States: $733 → $771 (+$38)</h5>
+                        <p>Highest time costs globally, reflecting extensive car dependency and urban sprawl patterns.</p>
+                    </div>
+                    <div class="city-card">
+                        <h5>🇬🇧 United Kingdom: $706 → $726 (+$20)</h5>
+                        <p>Second highest costs, with dense urban areas and high population concentration.</p>
+                    </div>
+                    <div class="city-card">
+                        <h5>🇩🇪 Germany: $457 → $498 (+$41)</h5>
+                        <p>Significantly lower costs due to excellent public transportation and urban planning.</p>
+                    </div>
+                </div>
+                
+                <h3>Factors Contributing to Time Costs</h3>
+                <ul>
+                    <li><strong>Infrastructure quality:</strong> Road capacity and public transit availability</li>
+                    <li><strong>Urban density:</strong> Population concentration and commuting patterns</li>
+                    <li><strong>Economic activity:</strong> Business centers and employment distribution</li>
+                    <li><strong>Transportation policies:</strong> Investment in alternative mobility solutions</li>
+                    <li><strong>Geographic factors:</strong> City layout and natural barriers</li>
+                </ul>
+                
+                <h3>Policy Implications</h3>
+                <p>Addressing high time costs requires strategic interventions:</p>
+                <ul>
+                    <li><strong>Public transit investment:</strong> Expand and improve mass transportation systems</li>
+                    <li><strong>Smart city initiatives:</strong> Implement intelligent traffic management</li>
+                    <li><strong>Urban planning:</strong> Design for mixed-use development and walkability</li>
+                    <li><strong>Alternative mobility:</strong> Promote cycling, walking, and shared transportation</li>
+                    <li><strong>Remote work policies:</strong> Reduce peak-hour travel demand</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Shared Mobility Modal -->
+    <div id="mobilityModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeMobilityModal()">&times;</span>
+            
+            <h2>Shared Mobility Trends Analysis</h2>
+            
+            <div class="chart-container">
+                <img src="shared-mobility-chart.png" alt="Shared Mobility Trips Chart" class="chart-image">
+            </div>
+            
+            <div class="explanation">
+                <h3>Understanding Shared Mobility</h3>
+                <p>Shared mobility includes services like ride-sharing, bike-sharing, and car-sharing that provide on-demand transportation alternatives to private vehicle ownership.</p>
+                
+                <div class="key-points">
+                    <h4>Key Findings:</h4>
+                    <ul>
+                        <li><strong>Washington DC leads adoption</strong> with peak trips reaching 40,000-50,000, showing highest shared mobility usage</li>
+                        <li><strong>Seattle shows strong growth</strong> as second most active city with 20,000-30,000 peak trips</li>
+                        <li><strong>Atlanta demonstrates moderate adoption</strong> with 10,000-20,000 peak trips</li>
+                        <li><strong>Milwaukee and Salt Lake City</strong> show lower adoption rates, indicating varying market maturity</li>
+                        <li><strong>Clear recovery pattern</strong> after significant dip, suggesting post-pandemic rebound</li>
+                    </ul>
+                </div>
+                
+                <h3>Regional Adoption Patterns</h3>
+                <p>The data reveals distinct patterns in shared mobility adoption across different cities:</p>
+                
+                <div class="city-highlights">
+                    <div class="city-card">
+                        <h5>🏛️ Washington DC: 40,000-50,000 trips</h5>
+                        <p>Highest adoption due to dense urban environment, tourism, and strong public transit integration.</p>
+                    </div>
+                    <div class="city-card">
+                        <h5>🌲 Seattle: 20,000-30,000 trips</h5>
+                        <p>Strong tech-savvy population and progressive transportation policies drive high adoption.</p>
+                    </div>
+                    <div class="city-card">
+                        <h5>🍑 Atlanta: 10,000-20,000 trips</h5>
+                        <p>Moderate adoption reflecting car-dependent culture with growing urban core.</p>
+                    </div>
+                    <div class="city-card">
+                        <h5>🏔️ Salt Lake City: <5,000 trips</h5>
+                        <p>Lower adoption due to smaller population and car-centric suburban development.</p>
+                    </div>
+                </div>
+                
+                <h3>Factors Influencing Adoption</h3>
+                <ul>
+                    <li><strong>Urban density:</strong> Higher population density correlates with increased shared mobility usage</li>
+                    <li><strong>Public transit integration:</strong> Cities with good transit networks see higher shared mobility adoption</li>
+                    <li><strong>Demographics:</strong> Younger, tech-savvy populations drive adoption</li>
+                    <li><strong>Infrastructure:</strong> Bike lanes and dedicated pickup zones support growth</li>
+                    <li><strong>Regulatory environment:</strong> Supportive policies and regulations encourage adoption</li>
+                </ul>
+                
+                <h3>Cyclical Patterns</h3>
+                <p>The chart shows clear cyclical patterns indicating:</p>
+                <ul>
+                    <li><strong>Daily cycles:</strong> Peak usage during commute hours and weekends</li>
+                    <li><strong>Seasonal variations:</strong> Weather and tourism impact usage patterns</li>
+                    <li><strong>Recovery trajectory:</strong> Strong rebound after pandemic-related restrictions</li>
+                    <li><strong>Market maturation:</strong> Growing acceptance and integration into daily routines</li>
+                </ul>
+                
+                <h3>Future Implications</h3>
+                <p>Shared mobility trends suggest important developments:</p>
+                <ul>
+                    <li><strong>Reduced car ownership:</strong> Potential for decreased private vehicle dependency</li>
+                    <li><strong>Environmental benefits:</strong> Lower emissions through shared vehicle usage</li>
+                    <li><strong>Urban planning:</strong> Cities adapting infrastructure for shared mobility</li>
+                    <li><strong>Economic opportunities:</strong> New business models and employment in mobility sector</li>
+                    <li><strong>Equity considerations:</strong> Ensuring access across all demographic groups</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Solutions Modal -->
+    <div id="solutionsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSolutions()">&times;</span>
+            
+            <h2>Proposed Solutions</h2>
+            
+            <div class="explanation">
+                <h3>🚦 Traffic Delay Solutions</h3>
+                <div class="key-points">
+                    <ul>
+                        <li><strong>Smart Traffic Management:</strong> AI-powered signal optimization and real-time traffic monitoring</li>
+                        <li><strong>Public Transit Expansion:</strong> Increase bus and metro frequency, extend coverage areas</li>
+                        <li><strong>Congestion Pricing:</strong> Implement dynamic pricing in high-traffic zones</li>
+                        <li><strong>Infrastructure Investment:</strong> Widen roads, add dedicated lanes, improve intersections</li>
+                    </ul>
+                </div>
+                
+                <h3>💰 Time Cost Solutions</h3>
+                <div class="key-points">
+                    <ul>
+                        <li><strong>Remote Work Policies:</strong> Encourage flexible work arrangements to reduce peak-hour travel</li>
+                        <li><strong>Alternative Transportation:</strong> Promote cycling, walking, and carpooling incentives</li>
+                        <li><strong>Urban Planning:</strong> Design mixed-use developments to reduce travel distances</li>
+                        <li><strong>Technology Integration:</strong> Real-time navigation apps and predictive traffic systems</li>
+                    </ul>
+                </div>
+                
+                <h3>🚗 Shared Mobility Solutions</h3>
+                <div class="key-points">
+                    <ul>
+                        <li><strong>Infrastructure Support:</strong> Dedicated pickup zones and bike lane networks</li>
+                        <li><strong>Regulatory Framework:</strong> Clear policies for ride-sharing and micro-mobility services</li>
+                        <li><strong>Public-Private Partnerships:</strong> Collaborate with mobility companies for better integration</li>
+                        <li><strong>Incentive Programs:</strong> Subsidies for shared mobility adoption</li>
+                    </ul>
+                </div>
+                
+                <h3>🌍 Cross-Cutting Solutions</h3>
+                <div class="key-points">
+                    <ul>
+                        <li><strong>Data-Driven Planning:</strong> Use analytics to optimize transportation networks</li>
+                        <li><strong>Green Infrastructure:</strong> Invest in sustainable transportation options</li>
+                        <li><strong>Community Engagement:</strong> Involve citizens in transportation planning decisions</li>
+                        <li><strong>International Collaboration:</strong> Share best practices between cities globally</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Python Analysis Modal -->
+    <div id="pythonModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closePythonAnalysis()">&times;</span>
+            
+            <h2>Python Traffic Analysis with Machine Learning</h2>
+            
+            <div class="explanation">
+                <h3>🐍 Overview</h3>
+                <p>This Python script uses machine learning (K-means clustering) to analyze traffic jam patterns across 30 countries. It groups countries into three categories: High, Medium, and Low traffic based on multiple metrics.</p>
+                
+                <h3>📊 Step-by-Step Analysis</h3>
+                
+                <div class="key-points">
+                    <h4><span class="step-number">1</span>Data Preparation</h4>
+                    <div class="code-block">
+# Import necessary libraries
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+import seaborn as sns
+                    </div>
+                    <p><strong>Purpose:</strong> Import required libraries for data manipulation, machine learning, and visualization.</p>
+                </div>
+                
+                <div class="key-points">
+                    <h4><span class="step-number">2</span>Sample Data Creation</h4>
+                    <div class="code-block">
+# Create sample data with 30 countries
+countries = ["USA", "China", "India", "Japan", "Germany", "UK", "France", "Italy", "Brazil", "Canada",
+             "Australia", "Russia", "South Korea", "Spain", "Mexico", "Indonesia", "Netherlands", "Saudi Arabia",
+             "Turkey", "Switzerland", "Sweden", "Poland", "Belgium", "Norway", "Austria", "UAE", "Singapore",
+             "Malaysia", "Thailand", "Vietnam"]
+
+# Generate random traffic metrics
+congestion_level = np.random.uniform(10, 70, 30)  # percentage
+peak_hour_congestion = np.random.uniform(20, 90, 30)  # percentage
+hours_lost = np.random.uniform(20, 300, 30)  # hours per year
+                    </div>
+                    <p><strong>Purpose:</strong> Create realistic traffic data for 30 countries with three key metrics: average congestion, peak hour congestion, and annual hours lost.</p>
+                </div>
+                
+                <div class="key-points">
+                    <h4><span class="step-number">3</span>Data Standardization</h4>
+                    <div class="code-block">
+# Standardize the data for clustering
+features = ['Avg_Congestion', 'Peak_Congestion', 'Hours_Lost']
+X = traffic_data[features].values
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+                    </div>
+                    <p><strong>Purpose:</strong> Normalize the data so all features have equal weight in the clustering algorithm. This prevents features with larger scales from dominating the analysis.</p>
+                </div>
+                
+                <div class="key-points">
+                    <h4><span class="step-number">4</span>K-Means Clustering</h4>
+                    <div class="code-block">
+# Apply K-means clustering with 3 clusters (high, medium, low traffic)
+kmeans = KMeans(n_clusters=3, random_state=42, n_init=10)
+traffic_data['Cluster'] = kmeans.fit_predict(X_scaled)
+                    </div>
+                    <p><strong>Purpose:</strong> Group countries into 3 clusters based on their traffic patterns. K-means finds natural groupings in the data.</p>
+                </div>
+                
+                <div class="key-points">
+                    <h4><span class="step-number">5</span>Cluster Labeling</h4>
+                    <div class="code-block">
+# Map cluster numbers to meaningful labels
+cluster_means = traffic_data.groupby('Cluster')[features].mean()
+cluster_order = cluster_means.sum(axis=1).sort_values(ascending=False).index
+cluster_labels = {
+    cluster_order[0]: 'High Traffic',
+    cluster_order[1]: 'Medium Traffic',
+    cluster_order[2]: 'Low Traffic'
+}
+                    </div>
+                    <p><strong>Purpose:</strong> Convert numerical cluster IDs into meaningful labels (High/Medium/Low Traffic) based on the average metrics of each cluster.</p>
+                </div>
+                
+                <div class="key-points">
+                    <h4><span class="step-number">6</span>Visualization</h4>
+                    <div class="code-block">
+# Visualize the clusters
+plt.figure(figsize=(12, 8))
+sns.scatterplot(
+    x='Avg_Congestion', 
+    y='Hours_Lost',
+    hue='Traffic_Level',
+    size='Peak_Congestion',
+    sizes=(50, 200),
+    palette='viridis',
+    data=traffic_data
+)
+                    </div>
+                    <p><strong>Purpose:</strong> Create a scatter plot showing countries clustered by traffic levels, with bubble size representing peak congestion.</p>
+                </div>
+                
+                <h3>🎯 Key Insights from the Analysis</h3>
+                <ul>
+                    <li><strong>Data-Driven Grouping:</strong> Countries are automatically grouped based on actual traffic patterns, not arbitrary categories</li>
+                    <li><strong>Multi-Dimensional Analysis:</strong> Considers three different traffic metrics simultaneously</li>
+                    <li><strong>Scalable Approach:</strong> Can easily be applied to more countries or different metrics</li>
+                    <li><strong>Visual Interpretation:</strong> Clear visualization helps identify patterns and outliers</li>
+                </ul>
+                
+                <h3>🔧 Technical Benefits</h3>
+                <ul>
+                    <li><strong>Standardization:</strong> Ensures fair comparison across different metrics</li>
+                    <li><strong>Unsupervised Learning:</strong> Discovers patterns without predefined categories</li>
+                    <li><strong>Reproducible Results:</strong> Uses random seed for consistent outcomes</li>
+                    <li><strong>Statistical Validation:</strong> Provides cluster statistics for validation</li>
+                </ul>
+                
+                <h3>📈 Real-World Applications</h3>
+                <ul>
+                    <li><strong>Urban Planning:</strong> Identify cities with similar traffic challenges</li>
+                    <li><strong>Policy Development:</strong> Target interventions based on traffic severity</li>
+                    <li><strong>Resource Allocation:</strong> Prioritize infrastructure investments</li>
+                    <li><strong>Benchmarking:</strong> Compare cities against similar peers</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function showTrafficData() {
+    document.getElementById('trafficModal').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeTrafficModal() {
+    document.getElementById('trafficModal').style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+function showTimeCostData() {
+    document.getElementById('timeCostModal').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeTimeCostModal() {
+    document.getElementById('timeCostModal').style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+function showMobilityData() {
+    document.getElementById('mobilityModal').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeMobilityModal() {
+    document.getElementById('mobilityModal').style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+function showSolutions() {
+    document.getElementById('solutionsModal').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSolutions() {
+    document.getElementById('solutionsModal').style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+function showPythonAnalysis() {
+    document.getElementById('pythonModal').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+function closePythonAnalysis() {
+    document.getElementById('pythonModal').style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+// Close modal when clicking outside of it
+window.onclick = function(event) {
+    var trafficModal = document.getElementById('trafficModal');
+    var timeCostModal = document.getElementById('timeCostModal');
+    var mobilityModal = document.getElementById('mobilityModal');
+    var solutionsModal = document.getElementById('solutionsModal');
+    var pythonModal = document.getElementById('pythonModal');
+    
+    if (event.target == trafficModal) {
+        closeTrafficModal();
+    }
+    if (event.target == timeCostModal) {
+        closeTimeCostModal();
+    }
+    if (event.target == mobilityModal) {
+        closeMobilityModal();
+    }
+    if (event.target == solutionsModal) {
+        closeSolutions();
+    }
+    if (event.target == pythonModal) {
+        closePythonAnalysis();
+    }
+}
+
+// Close modal with Escape key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closeTrafficModal();
+        closeTimeCostModal();
+        closeMobilityModal();
+        closeSolutions();
+        closePythonAnalysis();
+    }
+});
+</script>
+
+</body>
+</html>
